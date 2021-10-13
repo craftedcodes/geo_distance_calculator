@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'distance/application/distance_bloc.dart';
+import 'distance/presentation/distance_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,51 +20,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const MyHomePage(title: 'Geo Distance'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  late TextEditingController latitudeController;
-  late TextEditingController longitudeController;
-
-  @override
-  void initState() {
-    super.initState();
-    latitudeController = TextEditingController();
-    longitudeController = TextEditingController();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          TextField(
-            controller: latitudeController,
-          ),
-          TextField(
-            controller: longitudeController,
-          ),
-          TextButton(
-            onPressed: () => {},
-            child: const Text('GET DISTANCE'),
-          ),
-          const Text('distance to current location: km'),
-        ]),
+      home: BlocProvider(
+        create: (context) => DistanceBloc(),
+        child: const DistanceScreen(title: 'Geo Distance'),
       ),
     );
   }
